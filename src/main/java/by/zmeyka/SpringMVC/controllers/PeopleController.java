@@ -3,6 +3,7 @@ package by.zmeyka.SpringMVC.controllers;
 
 import by.zmeyka.SpringMVC.DAO.PersonDAO;
 import by.zmeyka.SpringMVC.Model.Person;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,7 +30,7 @@ public class PeopleController {
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model){
         model.addAttribute("person", personDAO.show(id));
-        model.addAttribute("books", personDAO.getBookbyIdPerson(id));
+        model.addAttribute("book", personDAO.getBookbyIdPerson(id));
         return"people/show";
 
     }
@@ -42,8 +43,21 @@ public class PeopleController {
    }
 
    @PostMapping()
-  public String create(@ModelAttribute("person") Person person ) {
+  public String create(@ModelAttribute("person") @Valid Person person ) {
         personDAO.save(person);
+        return "redirect/:people";
+
+  }
+
+  @GetMapping("/{id}/edit")
+  public String edit(Model model,@PathVariable("id") int id){
+        model.addAttribute("person", personDAO.show(id));
+  return "people/update";
+
+  }
+  @PatchMapping("/{id}")
+    public String update(@ModelAttribute("person") Person person,@PathVariable("id")int id){
+        personDAO.update(id,person);
         return "redirect/:people";
 
   }
