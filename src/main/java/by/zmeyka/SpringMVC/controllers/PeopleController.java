@@ -18,7 +18,7 @@ public class PeopleController {
         this.personDAO = personDAO;
     }
 
-    @GetMapping("/all-people")
+    @GetMapping()
     public String index(Model model){
         model.addAttribute("people", personDAO.index());
         return "people/index1";
@@ -34,14 +34,18 @@ public class PeopleController {
 
     }
 
-   @GetMapping("/new")
-    public String newPerson (@ModelAttribute("person")Person person){
+   @GetMapping ("/new")
+    public String newPerson (Model model){
+        model.addAttribute("person", new Person());
         return "people/new";
 
    }
 
-//   @PostMapping()
-//   public String create(@ModelAttribute("person"), @Valid Person person ){
-//
-//   }
-}
+   @PostMapping()
+  public String create(@ModelAttribute("person") Person person ) {
+        personDAO.save(person);
+        return "redirect/:people";
+
+  }
+   }
+
