@@ -7,16 +7,17 @@
 <body>
 
 <form th:method="POST" th:action="@{/people}" th:object="${person}">
+
   <label for="name">Enter name: </label>
-  <input type="text" th:field="*{person.name}" id="name"/>
-  <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{person.name}">Name Error</div>
-  <br/>
-  <label for="surname">Enter age: </label>
-  <input type="text" th:field="*{person.surname}" id="surname"/>
-  <div style="color:red" th:if="${#fields.hasErrors('surname')}" th:errors="*{person.surname}">Surname Error</div>
+  <input type="text" th:field="*{name}" id="name"/>
   <br/>
 
-  <br/>
+
+  <label for="surname">Enter surname: </label>
+  <input type="text" th:field="*{surname}" id="surname"/>
+
+
+
   <input type="submit" value="Create!"/>
 </form>
 

@@ -39,7 +39,7 @@ public class PersonDAO {
     }
 
     public void delete(int id) {
-        jdbcTemplate.update("DELETE FROM library.person WHERE id=?", id);
+        jdbcTemplate.update("DELETE  FROM library.person WHERE id=?", id);
     }
 
     public Optional<Person> getPersonBySurname(String surname){

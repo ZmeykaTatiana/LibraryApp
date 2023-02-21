@@ -35,7 +35,7 @@ public class PeopleController {
 
     }
 
-   @GetMapping ("/new")
+   @GetMapping  ("/new")
     public String newPerson (Model model){
         model.addAttribute("person", new Person());
         return "people/new";
@@ -45,7 +45,7 @@ public class PeopleController {
    @PostMapping()
   public String create(@ModelAttribute("person") @Valid Person person ) {
         personDAO.save(person);
-        return "redirect/:people";
+        return "people/allGood";
 
   }
 
@@ -55,11 +55,18 @@ public class PeopleController {
   return "people/update";
 
   }
-  @PatchMapping("/{id}")
+  @PostMapping ("/{id}")
     public String update(@ModelAttribute("person") Person person,@PathVariable("id")int id){
         personDAO.update(id,person);
-        return "redirect/:people";
+        return "people/allGood";
 
   }
+
+    @DeleteMapping("/{id}")
+    public String delete(@PathVariable("id")int id){
+        personDAO.delete(id);
+        return "people/allGood";
+
+    }
    }
 

@@ -3,6 +3,7 @@ package by.zmeyka.SpringMVC.DAO;
 import by.zmeyka.SpringMVC.Model.Book;
 import by.zmeyka.SpringMVC.Model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
@@ -12,6 +13,7 @@ import java.util.Optional;
 
 @Component
 public class BookDAO {
+
 
     private JdbcTemplate jdbcTemplate;
     @Autowired
@@ -42,8 +44,8 @@ public class BookDAO {
         jdbcTemplate.update("DELETE FROM library.book WHERE id=?", id);
     }
     public Optional<Person> getBookBorrower(int id){
-        return  jdbcTemplate.query("Select Person* from book join person on book.id_person=person.id"+
-                "Where book.id=?", new Object[]{id}, new BeanPropertyRowMapper<>(Person.class)).stream().findAny();
+        return  jdbcTemplate.query("Select person.* from book join person on book.id_person=person.id Where book.id=?",
+                new Object[]{id}, new BeanPropertyRowMapper<>(Person.class)).stream().findAny();
 
     }
    public void release(int id){
